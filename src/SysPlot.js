@@ -18,7 +18,7 @@ export default class SysPlot {
       algorithm: config.algorithm,
       padding: config.padding,
       proportional: config.proportional,
-      spread: Math.max(0.1, Math.min(1, config.spread)) / 10,
+      spread: config.spread,
     };
 
     if (updateVectors) this.vectors = null;
@@ -32,18 +32,22 @@ export default class SysPlot {
       this.vectors = null;
       this.positions = null;
     }
+
+    return this;
   }
 
   setShapes(shapes) {
     this.shapes = shapes;
     this.positions = null;
+
+    return this;
   }
 
   getVectors() {
     if (!this.vectors) {
       const { config, width: w, height: h } = this;
-      const { proportional, spread } = config;
-      const [xDim, yDim] = proportional ? [w, h] : (w > h ? [w, w] : [h, h]);
+      const [xDim, yDim] = config.proportional ? [w, h] : (w > h ? [w, w] : [h, h]);
+      const spread = Math.max(0.1, Math.min(1, config.spread)) / 10;
 
       this.vectors = this.config.algorithm(
         this.width,
