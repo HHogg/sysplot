@@ -23,6 +23,8 @@ export default class SysPlot {
 
     if (updateVectors) this.vectors = null;
     if (updatePositions) this.positions = null;
+
+    return this;
   }
 
   setBounds(width, height) {

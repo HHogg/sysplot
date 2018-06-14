@@ -1,11 +1,5 @@
-export default (shapes) => shapes.map((shape) => {
-  if (!shape) {
-    return shape;
-  }
-
-  if ('r' in shape) {
-    return [shape.pos.x, shape.pos.y];
-  }
-
-  return [shape.pos.x, shape.pos.y];
-});
+export default (shapes) =>
+  shapes.map((shape) => shape
+    ? [shape.pos.x, shape.pos.y]
+    : shape
+  );
