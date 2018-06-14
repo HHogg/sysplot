@@ -1,19 +1,19 @@
 {
   "name": "sysplot",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "A library that systematically generates a plane for plotting shapes, with a variety of algorithms to choose from.",
   "main": "lib/sysplot.cjs.js",
   "module": "lib/sysplot.esm.js",
   "scripts": {
     "build": "BABEL_ENV=production rollup -c",
-    "lint": "eslint --config .eslintrc ./src"
+    "lint": "eslint --config .eslintrc ./src",
+    "semantic-release": "semantic-release",
+    "test": "jest ./src",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "author": "Harry Hogg <harry@hogg.io>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HHogg/sysplot"
-  },
+  "repository": "git@github.com:HHogg/sysplot.git",
   "keywords": [
     "Archimedes",
     "Concentric",
@@ -28,6 +28,9 @@
     "sat": "^0.7.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^2.0.2",
+    "@semantic-release/git": "^5.0.0",
+    "@semantic-release/npm": "^3.3.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -35,9 +38,12 @@
     "eslint": "^4.19.1",
     "eslint-config-preshape": "^1.0.0",
     "eslint-plugin-react": "^7.8.2",
+    "jest": "^23.1.0",
     "rollup": "^0.59.4",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
-    "rollup-plugin-node-resolve": "^3.3.0"
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "semantic-release": "^15.5.2",
+    "travis-deploy-once": "^5.0.0"
   }
 }
