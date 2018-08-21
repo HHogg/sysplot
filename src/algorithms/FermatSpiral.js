@@ -1,4 +1,12 @@
-const FermatSpiral = (w, h, cx, cy, xDist, yDist, c = 1.5) => {
+const FermatSpiral = ({
+  cover: cover,
+  height: h,
+  width: w,
+  xCenter: cx,
+  xDistance: xDist,
+  yDistance: yDist,
+  yCenter: cy,
+}, c = 1.5) => {
   const vectors = [];
   let rx, ry, tx = 0, ty = 0, vx = 1, vy = 1;
 
@@ -10,6 +18,8 @@ const FermatSpiral = (w, h, cx, cy, xDist, yDist, c = 1.5) => {
 
     if (vx > 0 && vy > 0 && vx < w && vy < h) {
       vectors.push([vx, vy]);
+    } else if (!cover) {
+      return vectors;
     }
   }
 

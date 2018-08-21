@@ -1,6 +1,14 @@
 const pi2 = Math.PI * 2;
 
-const ConcentricCircles = (w, h, cx, cy, xDist, yDist) => {
+const ConcentricCircles = ({
+  cover: cover,
+  height: h,
+  width: w,
+  xCenter: cx,
+  xDistance: xDist,
+  yDistance: yDist,
+  yCenter: cy,
+}) => {
   const vectors = [[cx, cy]];
   const max = Math.hypot(cx, cy);
   let rx = 0;
@@ -22,6 +30,8 @@ const ConcentricCircles = (w, h, cx, cy, xDist, yDist) => {
 
       if (vx > 0 && vy > 0 && vx < w && vy < h) {
         vectors.push([vx, vy]);
+      } else if (!cover) {
+        return vectors;
       }
     }
   }

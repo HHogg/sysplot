@@ -1,4 +1,12 @@
-const ArchimedesSpiral = (w, h, cx, cy, xDist, yDist) => {
+const ArchimedesSpiral = ({
+  cover: cover,
+  height: h,
+  width: w,
+  xCenter: cx,
+  xDistance: xDist,
+  yDistance: yDist,
+  yCenter: cy,
+}) => {
   const vectors = [];
   const hxDist = xDist / 2;
   const hyDist = yDist / 2;
@@ -16,6 +24,8 @@ const ArchimedesSpiral = (w, h, cx, cy, xDist, yDist) => {
 
     if (vx > 0 && vy > 0 && vx < w && vy < h) {
       vectors.push([vx, vy]);
+    } else if (!cover) {
+      return vectors;
     }
   }
 

@@ -1,24 +1,44 @@
+import ArchimedesSpiral from './algorithms/ArchimedesSpiral';
+import getMaxShapeSize from './positioning/getMaxShapeSize';
 import position from './positioning/position';
+
+const defaultConfig = {
+  algorithm: ArchimedesSpiral,
+  cover: true,
+  padding: 10,
+  proportional: false,
+  spread: 0.25,
+};
 
 export default class SysPlot {
   constructor() {
-    this.config = {};
+    this.config = Object.assign({}, defaultConfig);
   }
 
   setConfig(config = {}) {
+    const {
+      algorithm = defaultConfig.algorithm,
+      cover = defaultConfig.cover,
+      padding = defaultConfig.padding,
+      proportional = defaultConfig.proportional,
+      spread = defaultConfig.spread,
+    } = config;
+
     const updateVectors =
-      this.config.algorithm !== config.algorithm ||
-      this.config.proportional !== config.proportional ||
-      this.config.spread !== config.spread;
+      this.config.algorithm !== algorithm ||
+      this.config.cover !== cover ||
+      this.config.proportional !== proportional ||
+      this.config.spread !== spread;
 
     const updatePositions = updateVectors ||
-      this.config.padding !== config.padding;
+      this.config.padding !== padding;
 
     this.config = {
-      algorithm: config.algorithm,
-      padding: config.padding,
-      proportional: config.proportional,
-      spread: config.spread,
+      algorithm,
+      cover,
+      padding,
+      proportional,
+      spread,
     };
 
     if (updateVectors) this.vectors = null;
@@ -39,28 +59,38 @@ export default class SysPlot {
   }
 
   setShapes(shapes) {
-    this.shapes = shapes;
+    const shapesBoundaryOffset = this.config.cover ? 0 : (getMaxShapeSize(shapes) / 2);
+
     this.positions = null;
+    this.shapes = shapes;
+
+    if (this.shapesBoundaryOffset !== shapesBoundaryOffset) {
+      this.shapesBoundaryOffset = shapesBoundaryOffset;
+      this.vectors = null;
+    }
 
     return this;
   }
 
   getVectors() {
     if (!this.vectors) {
-      const { config, width: w, height: h } = this;
+      const { config, width, height } = this;
+      const h = height - this.shapesBoundaryOffset;
+      const w = width - this.shapesBoundaryOffset;
       const [xDim, yDim] = config.proportional ? [w, h] : (w > h ? [w, w] : [h, h]);
       const spread = Math.max(0.1, Math.min(1, config.spread)) / 10;
 
-      this.vectors = this.config.algorithm(
-        this.width,
-        this.height,
-        this.width / 2,
-        this.height / 2,
-        (xDim * (spread * (xDim / yDim)))
+      this.vectors = this.config.algorithm({
+        cover: config.cover,
+        height: h,
+        width: w,
+        xCenter: (w / 2) + (this.shapesBoundaryOffset / 2),
+        xDistance: (xDim * (spread * (xDim / yDim)))
           * this.config.algorithm.NORMALISATION_FACTOR,
-        (yDim * (spread * (yDim / xDim)))
+        yCenter: (h / 2) + (this.shapesBoundaryOffset / 2),
+        yDistance: (yDim * (spread * (yDim / xDim)))
           * this.config.algorithm.NORMALISATION_FACTOR,
-      );
+      });
     }
 
     return this.vectors;

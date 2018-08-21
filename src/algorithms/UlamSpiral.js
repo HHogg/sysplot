@@ -13,7 +13,15 @@ const isPrimeNumber = (n) => {
   return n !== 1;
 };
 
-const UlamSpiral = (w, h, cx, cy, xDist, yDist) => {
+const UlamSpiral = ({
+  cover: cover,
+  height: h,
+  width: w,
+  xCenter: cx,
+  xDistance: xDist,
+  yDistance: yDist,
+  yCenter: cy,
+}) => {
   const vectors = [];
   let n = 0;
   let d = R;
@@ -25,6 +33,8 @@ const UlamSpiral = (w, h, cx, cy, xDist, yDist) => {
     if (isPrimeNumber(n++)) {
       if (vx > 0 && vy > 0 && vx < w && vy < h) {
         vectors.push([vx, vy]);
+      } else if (!cover) {
+        return vectors;
       }
     }
 

@@ -22,6 +22,7 @@ const sysPlot = new SysPlot();
 
 sysPlot.setConfig({
   algorithm: VogelSpiral,
+  cover: true,
   padding: 10,
   proportional: true,
   spread: 0.25,
@@ -86,17 +87,31 @@ const shapesWithValidPositions = zip(positions, shapes).filter(([, p]) => p);
 const config = {
   /**
    * One of the exported algorithm functions mentioned above.
+   *
+   * Defaults: ArchimedesSpiral
    */
   algorithm: Function,
 
   /**
+   * Specifies to generate as many vector points needed to cover the entire
+   * area give.
+   *
+   * Defaults: true
+   */
+  cover: Boolean
+
+  /**
    * The amount of padding to be used around the shapes when
    * positioning.
+   *
+   * Defaults: 10
    */
   padding: Number,
 
   /**
    * Retains the aspect ratio for plotting the vector points.
+   *
+   * Defaults: false
    */
   proportional: Boolean,
 
@@ -104,6 +119,8 @@ const config = {
    * A number between 0.1 and 1 that affects the density of the
    * vector points. 0.1 being very dense and 1 being very spread
    * apart.
+   *
+   * Defaults: 0.25
    */
   spread: Number,
 }
@@ -161,7 +178,6 @@ const positions = sysPlot.getPositions();
 
 const shapesWithValidPositions = zip(positions, shapes).filter(([, p]) => p);
 ```
-
 
 #### SysPlot.getVectors()
 
