@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/HHogg/sysplot/compare/v2.0.0...v2.1.0) (2018-09-05)
+
+
+### Features
+
+* **AspectRatio:** Adds aspectRatio config property ([e3e642f](https://github.com/HHogg/sysplot/commit/e3e642f))
+
 # [2.0.0](https://github.com/HHogg/sysplot/compare/v1.0.0...v2.0.0) (2018-09-05)
 
 
