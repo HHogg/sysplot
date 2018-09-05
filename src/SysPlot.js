@@ -4,6 +4,7 @@ import position from './positioning/position';
 
 const defaultConfig = {
   algorithm: ArchimedesSpiral,
+  aspectRatio: 1,
   cover: true,
   padding: 10,
   proportional: false,
@@ -18,6 +19,7 @@ export default class SysPlot {
   setConfig(config = {}) {
     const {
       algorithm = defaultConfig.algorithm,
+      aspectRatio = defaultConfig.aspectRatio,
       cover = defaultConfig.cover,
       padding = defaultConfig.padding,
       proportional = defaultConfig.proportional,
@@ -26,6 +28,7 @@ export default class SysPlot {
 
     const updateVectors =
       this.config.algorithm !== algorithm ||
+      this.config.aspectRatio !== aspectRatio ||
       this.config.cover !== cover ||
       this.config.proportional !== proportional ||
       this.config.spread !== spread;
@@ -35,6 +38,7 @@ export default class SysPlot {
 
     this.config = {
       algorithm,
+      aspectRatio,
       cover,
       padding,
       proportional,
@@ -75,10 +79,12 @@ export default class SysPlot {
   getVectors() {
     if (!this.vectors) {
       const { config, width, height } = this;
+      const spread = Math.max(0.1, Math.min(1, config.spread)) / 10;
       const h = height - this.shapesBoundaryOffset;
       const w = width - this.shapesBoundaryOffset;
-      const [xDim, yDim] = config.proportional ? [w, h] : (w > h ? [w, w] : [h, h]);
-      const spread = Math.max(0.1, Math.min(1, config.spread)) / 10;
+      const [xDim, yDim] = config.proportional ? [w, h] : (w > h
+        ? [w, w * config.aspectRatio]
+        : [h, h * config.aspectRatio]);
 
       this.vectors = this.config.algorithm({
         cover: config.cover,

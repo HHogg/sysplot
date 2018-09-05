@@ -93,6 +93,14 @@ const config = {
   algorithm: Function,
 
   /**
+   * An explicit aspect ratio, irrespective of the given bounds, for
+   * plotting the vectors.
+   *
+   * Defaults: 1
+   */
+  aspectRatio: Number,
+
+  /**
    * Specifies to generate as many vector points needed to cover the entire
    * area give.
    *
@@ -109,7 +117,7 @@ const config = {
   padding: Number,
 
   /**
-   * Retains the aspect ratio for plotting the vector points.
+   * Retains the aspect ratio (taking from the bounds) for plotting the vector points.
    *
    * Defaults: false
    */
